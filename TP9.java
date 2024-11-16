@@ -28,13 +28,41 @@ public class TP9 {
 
       switch (option) {
         case 1:
+          Cliente nuevoCliente = new Cliente();
+
           System.out.print("Ingrese el nombre del cliente: ");
-          String nombreCliente = scanner.next();
+          String nombre = scanner.next();
+          while (!clienteService.validarNombre(nombre)) {
+            System.out.print("Nombre inválido. Ingrese nuevamente: ");
+            nombre = scanner.next();
+          }
+          nuevoCliente.setNombre(nombre);
 
-          // pedir todos los datos
-          Cliente cliente = new Cliente();
-          cliente.setNombre(nombreCliente);
+          System.out.print("Ingrese el CUIT del cliente: ");
+          String cuit = scanner.next();
+          while (!clienteService.validarCuit(cuit)) {
+            System.out.print("CUIT inválido. Ingrese nuevamente: ");
+            cuit = scanner.next();
+          }
+          nuevoCliente.setCuit(Integer.parseInt(cuit.replace("-", "")));
 
+          System.out.print("Ingrese el email del cliente: ");
+          String email = scanner.next();
+          while (!clienteService.validarEmail(email)) {
+            System.out.print("Email inválido. Ingrese nuevamente: ");
+            email = scanner.next();
+          }
+          nuevoCliente.setEmail(email);
+
+          System.out.print("Ingrese el celular del cliente: ");
+          String celular = scanner.next();
+          while (!clienteService.validarCelular(celular)) {
+            System.out.print("Celular inválido. Ingrese nuevamente: ");
+            celular = scanner.next();
+          }
+          nuevoCliente.setCelular(Integer.parseInt(celular));
+
+          System.out.println("Cliente registrado con éxito.");
           break;
 
         case 2:
