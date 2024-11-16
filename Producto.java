@@ -3,27 +3,27 @@ public class Producto {
     private int stock;
     private double precio;
 
-    public String getNombre(){
+    public String getNombre() {
         return this.nombre;
     }
-    
-    public void setNombre(String nuevoNombre){
-        this.nombre= nuevoNombre;
+
+    public void setNombre(String nuevoNombre) {
+        this.nombre = nuevoNombre;
     }
 
-    public int getstock(){
+    public int getStock() {
         return this.stock;
     }
-    
-    public void setStock(int nuevoStock){
-        this.stock= nuevoStock;
+
+    public void setStock(int nuevoStock) {
+        this.stock = nuevoStock;
     }
 
-    public double getPrecio(){
+    public double getPrecio() {
         return this.precio;
     }
-    
-    public void setPrecio(double nuevoPrecio){
-        this.precio= nuevoPrecio;
+
+    public void setPrecio(double nuevoPrecio) {
+        this.precio = nuevoPrecio;
     }
 }

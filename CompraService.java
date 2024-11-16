@@ -6,15 +6,18 @@ public class CompraService {
 
     private List<Compra> compras; // Lista de compras.
     private ClienteService clienteService; // Para validar clientes si es necesario.
+    private ProductoService productoService; // Para validar productos si es necesario.
 
-    public CompraService(List<Compra> compras, ClienteService clienteService) {
+    public CompraService(List<Compra> compras, ClienteService clienteService, ProductoService productoService) {
         this.compras = compras;
         this.clienteService = clienteService;
+        this.productoService = productoService;
     }
 
     // Validar la fecha de compra (debe ser la fecha actual)
     public LocalDate obtenerFechaCompra() {
         return LocalDate.now();
+    }
 
     // Ver todas las compras: Da las info del cliente y la compra!
     public List<String> verTodasLasCompras() {
@@ -34,8 +37,9 @@ public class CompraService {
         }
 
         return compras.stream()
-                .filter(compra -> compra.getCliente().getNombre().toLowerCase().contains(terminoCliente.toLowerCase()) ||
-                        compra.getCliente().getCuit().contains(terminoCliente))
+                .filter(compra -> compra.getCliente().getNombre().toLowerCase().contains(terminoCliente.toLowerCase())
+                        ||
+                        String.valueOf(compra.getCliente().getCuit()).contains(terminoCliente))
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +47,7 @@ public class CompraService {
     public List<Compra> filtrarPorFecha(LocalDate fechaInicio, LocalDate fechaFin) {
         return compras.stream()
                 .filter(compra -> !compra.getFechaCompra().isBefore(fechaInicio) &&
-                                  !compra.getFechaCompra().isAfter(fechaFin))
+                        !compra.getFechaCompra().isAfter(fechaFin))
                 .collect(Collectors.toList());
     }
 
@@ -52,12 +56,14 @@ public class CompraService {
         return compra.getLineasCompra().stream()
                 .mapToDouble(linea -> linea.getProducto().getPrecio() * linea.getCantidad())
                 .sum();
+    }
+
     // Validar las líneas de compra
     public boolean validarLineasDeCompra(List<LineaCompra> lineasCompra) {
         for (LineaCompra linea : lineasCompra) {
             Producto producto = linea.getProducto();
             int cantidad = linea.getCantidad();
-            
+
             // Validar que el producto exista
             if (producto == null || !productoService.validarNombreProducto(producto.getNombre())) {
                 return false;
